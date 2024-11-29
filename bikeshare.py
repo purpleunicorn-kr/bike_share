@@ -70,17 +70,12 @@ def load_data(city, month, day):
 
     df_city['Month'] = df_city['Start Time'].dt.strftime('%B').str.lower()
     df_city['Day'] = df_city['Start Time'].dt.day_name().str.lower()
-
-    if (month == 'all'):
-        if (day == 'all'):
-            df = df_city
-        else:
-            df = df_city[df_city['Day'] == day]
-    else:
-        if (day == 'all'):
-            df = df_city[(df_city['Month'] == month)]
-        else:
-            df = df_city[((df_city['Month'] == month)) & (df_city['Day'] == day)]
+    
+    # "all"이 아닌 경우 필터 적용
+    if month != 'all':
+        df_city = df_city[df_city['Month'] == month]
+    if day != 'all':
+        df_city = df_city[df_city['Day'] == day]
 
     return df
 
